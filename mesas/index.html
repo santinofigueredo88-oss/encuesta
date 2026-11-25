@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Buscá el apellido del egresado y encontrá las mesas de su familia en la cena de egresados de la Promo 2026.">
+<meta name="theme-color" content="#050203">
+<meta property="og:title" content="Encontrá tu mesa · Promo 2026">
+<meta property="og:description" content="Cena de egresados Indu 26. Buscá el apellido del egresado y mirá tus mesas.">
+<meta property="og:image" content="fondo.jpg">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♥</text></svg>">
+<style>[hidden]{display:none!important} img{max-width:100%} :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<title>Mesas Promo 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Saira:ital,wght@1,800;1,900&display=swap">
+<style>
+/* Layout: portada a pantalla completa con el loop 3D del Vegas Night detrás; buscador de vidrio con borde neón; resultados como el panel de precios de los flyers; abajo el plano del salón */
+:root {
+  --bg: #050203;
+  --ink: #f8f1f3;
+  --muted: #b9a3a8;
+  --dim: #7d666b;
+  --neon: #ff2440;
+  --neon-hot: #ff5d72;
+  --glass: rgba(22, 7, 10, .58);
+  --glass-hi: rgba(40, 12, 17, .72);
+  --edge: rgba(255, 70, 92, .28);
+  --edge-soft: rgba(255, 255, 255, .07);
+  --c1: #e9b44c;
+  --c2: #ff4f6d;
+  --c3: #a98bff;
+  --c4: #3ad0b2;
+  --display: "Saira", "Arial Black", Impact, sans-serif;
+  --body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --chrome: linear-gradient(180deg, #ffffff 0%, #f1eff4 40%, #9a99a6 50%, #e4e1e8 64%, #ffe1e6 100%);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.inner { max-width: 880px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* Portada */
+.hero { position: relative; isolation: isolate; overflow: hidden; padding-block: 56px 40px; }
+.hero video, .hero .poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -3; filter: saturate(1.15) brightness(.62) blur(1.5px); transform: scale(1.06); }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: -2;
+  background: radial-gradient(70% 55% at 50% 38%, rgba(5,2,3,.15), rgba(5,2,3,.78) 72%), linear-gradient(180deg, rgba(5,2,3,.35) 0%, rgba(5,2,3,.55) 55%, var(--bg) 100%); }
+.hero::after { content: ""; position: absolute; left: 50%; top: -40%; width: 160%; height: 120%; translate: -50% 0; z-index: -1; pointer-events: none; opacity: .55; mix-blend-mode: screen;
+  background: conic-gradient(from 180deg at 50% 0%, transparent 0 160deg, rgba(255,40,64,.22) 168deg, transparent 176deg, transparent 184deg, rgba(255,255,255,.12) 188deg, transparent 194deg, rgba(255,40,64,.2) 200deg, transparent 210deg 360deg);
+  animation: beams 9s ease-in-out infinite alternate; transform-origin: 50% 0; }
+@keyframes beams { from { rotate: -7deg; } to { rotate: 7deg; } }
+.hero .inner { display: grid; justify-items: center; text-align: center; gap: 14px; }
+.logo { width: min(520px, 86%); height: auto; filter: drop-shadow(0 10px 30px rgba(0,0,0,.6)) drop-shadow(0 0 28px rgba(255,36,64,.35)); }
+.eyebrow { font-weight: 800; font-stretch: 125%; font-size: 12px; letter-spacing: .34em; text-transform: uppercase; color: #ffd0d7; text-shadow: 0 0 12px rgba(255,36,64,.6); }
+h1 { margin: 2px 0 0; font-family: var(--display); font-style: italic; font-weight: 900; line-height: .92; letter-spacing: -.012em; font-size: clamp(44px, 10.5vw, 92px); text-wrap: balance;
+  background: var(--chrome); -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 1.5px 0 #ff2440) drop-shadow(0 0 1px #ff2440) drop-shadow(0 0 22px rgba(255,36,64,.75)); }
+.lead { margin: 0; max-width: 44ch; color: #eadbde; font-size: 16px; }
+.lead b { color: #fff; }
+
+/* Buscador */
+.search { width: 100%; max-width: 620px; margin-top: 14px; display: grid; gap: 12px; }
+.field { position: relative; display: flex; align-items: center; gap: 10px; padding: 6px 6px 6px 20px; border-radius: 18px;
+  background: var(--glass); backdrop-filter: blur(16px) saturate(1.3); -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  border: 1px solid var(--edge); box-shadow: 0 0 0 1px rgba(255,36,64,.15), 0 0 32px rgba(255,36,64,.28), inset 0 1px 0 rgba(255,255,255,.08); transition: box-shadow .2s, border-color .2s; }
+.field:focus-within { border-color: rgba(255,93,114,.9); box-shadow: 0 0 0 1px var(--neon), 0 0 46px rgba(255,36,64,.55), inset 0 1px 0 rgba(255,255,255,.1); }
+.field svg { flex: none; color: var(--neon-hot); filter: drop-shadow(0 0 6px rgba(255,36,64,.8)); }
+.field input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font-size: 19px; font-weight: 600; padding: 19px 0; letter-spacing: .005em; }
+.field input::placeholder { color: #9a8287; font-weight: 500; }
+.field input::-webkit-search-cancel-button { display: none; }
+.clear { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.06); color: var(--muted); display: grid; place-items: center; }
+.clear:hover { background: rgba(255,255,255,.13); color: #fff; }
+.go { flex: none; display: inline-flex; align-items: center; gap: 8px; height: 50px; padding: 0 22px; border: 0; border-radius: 13px;
+  font-family: var(--display); font-style: italic; font-weight: 900; font-size: 19px; letter-spacing: .02em; color: #fff;
+  background: linear-gradient(180deg, #ff5a6e 0%, #ff2440 45%, #c3001b 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), inset 0 -2px 0 rgba(0,0,0,.25), 0 0 0 1px rgba(255,120,135,.6), 0 6px 22px rgba(255,36,64,.55);
+  text-shadow: 0 1px 0 rgba(90,0,12,.6); transition: transform .12s, box-shadow .15s, filter .15s; }
+.go:hover { filter: brightness(1.08); box-shadow: inset 0 1px 0 rgba(255,255,255,.6), inset 0 -2px 0 rgba(0,0,0,.25), 0 0 0 1px #ff8796, 0 8px 30px rgba(255,36,64,.75); }
+.go:active { transform: translateY(1px) scale(.98); }
+.go svg { filter: drop-shadow(0 1px 0 rgba(90,0,12,.5)); }
+.filters { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.pill { position: relative; display: grid; justify-items: start; align-content: center; gap: 2px; min-height: 58px; padding: 9px 12px 9px 14px; border-radius: 14px; text-align: left;
+  color: #eadbdf; background: linear-gradient(180deg, rgba(40,13,18,.7), rgba(16,5,8,.78)); border: 1px solid rgba(255,255,255,.09);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 8px 20px -12px #000; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  transition: border-color .15s, box-shadow .15s, transform .12s, background .15s; }
+.pill b { display: inline-flex; align-items: center; gap: 7px; font-size: 14.5px; font-weight: 800; color: #fff; }
+.pill small { font-size: 12px; font-weight: 600; color: var(--muted); padding-left: 15px; }
+.pill.todos { justify-items: center; }
+.pill.todos small { padding-left: 0; }
+.pill:hover { border-color: color-mix(in srgb, var(--cc, #ff5d72) 60%, transparent); transform: translateY(-1px); }
+.pill:active { transform: translateY(0) scale(.98); }
+.pill[aria-pressed="true"] { background: linear-gradient(180deg, #ff4a60 0%, #e0102c 55%, #a80018 100%); border-color: #ff9aa6;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 0 0 1px rgba(255,36,64,.5), 0 0 26px rgba(255,36,64,.6); }
+.pill[aria-pressed="true"] small { color: #ffe1e5; }
+.pill[aria-pressed="true"] .dot { background: #fff; box-shadow: 0 0 8px #fff; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cc); box-shadow: 0 0 8px var(--cc); flex: none; }
+.k1 { --cc: var(--c1); } .k2 { --cc: var(--c2); } .k3 { --cc: var(--c3); } .k4 { --cc: var(--c4); }
+
+/* Resultados */
+main { display: grid; gap: 34px; padding-block: 8px 60px; }
+.results { display: grid; gap: 12px; }
+.rhead { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 14px; }
+.rhead strong { color: #fff; }
+.card { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 16px 20px; width: 100%; text-align: left;
+  padding: 18px 18px 18px 22px; border-radius: 20px; background: linear-gradient(180deg, rgba(36,11,16,.85), rgba(16,5,8,.9)); border: 1px solid var(--edge-soft);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 18px 40px -22px #000; transition: border-color .15s, box-shadow .15s, transform .15s; overflow: hidden; }
+.card::before { content: ""; position: absolute; left: 0; top: 18%; bottom: 18%; width: 3px; border-radius: 3px; background: var(--cc); box-shadow: 0 0 14px var(--cc); }
+.card:hover { border-color: rgba(255,93,114,.45); transform: translateY(-1px); }
+.card.on { border-color: var(--neon); box-shadow: 0 0 0 1px var(--neon), 0 0 34px rgba(255,36,64,.35); }
+.who { min-width: 0; display: grid; gap: 6px; }
+.who strong { font-family: var(--display); font-style: italic; font-weight: 900; font-size: 25px; line-height: 1.05; overflow-wrap: anywhere; }
+.who small { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13.5px; font-weight: 600; }
+.tablero { display: grid; justify-items: center; gap: 2px; min-width: 132px; padding: 10px 18px 12px; border-radius: 14px; background: #0b0304;
+  border: 1.5px solid rgba(255,70,92,.75); box-shadow: 0 0 0 1px rgba(255,36,64,.25), 0 0 26px rgba(255,36,64,.35), inset 0 0 22px rgba(255,36,64,.12); }
+.tablero .lbl { font-size: 10.5px; font-weight: 800; font-stretch: 125%; letter-spacing: .3em; text-transform: uppercase; color: #ff8b9b; }
+.tablero .num { font-family: var(--display); font-style: italic; font-weight: 900; font-size: 40px; line-height: 1; letter-spacing: -.01em; white-space: nowrap; font-variant-numeric: tabular-nums;
+  background: var(--chrome); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 1px 0 #ff2440) drop-shadow(0 0 10px rgba(255,36,64,.7)); }
+.tablero .num i { font-style: normal; font-size: .55em; padding: 0 .12em; }
+.solo .card { padding: 24px 24px 24px 28px; }
+.solo .who strong { font-size: 30px; }
+.solo .tablero { min-width: 170px; padding: 14px 22px 16px; }
+.solo .tablero .num { font-size: 54px; }
+.vacio { display: grid; gap: 6px; padding: 24px; border-radius: 20px; text-align: center; background: rgba(20,7,10,.6); border: 1px dashed rgba(255,70,92,.35); }
+.vacio strong { font-family: var(--display); font-style: italic; font-weight: 900; font-size: 22px; }
+.vacio p { margin: 0; color: var(--muted); font-size: 14.5px; }
+.tip { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; margin: 0; color: var(--muted); font-size: 14px; }
+.tip button { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 999px; font-weight: 700; font-size: 14px; color: #fff;
+  background: rgba(255,36,64,.12); border: 1px solid rgba(255,70,92,.5); box-shadow: 0 0 14px rgba(255,36,64,.2); transition: background .15s, box-shadow .15s; }
+.tip button:hover { background: rgba(255,36,64,.25); box-shadow: 0 0 20px rgba(255,36,64,.45); }
+.ver { grid-column: 1 / -1; display: inline-flex; align-items: center; gap: 6px; justify-self: start; font-size: 12.5px; font-weight: 700; color: #ff9aa7; letter-spacing: .02em; }
+.ver svg { transition: transform .15s; }
+.card:hover .ver svg { transform: translateY(2px); }
+
+/* Plano */
+.salon { position: relative; border-radius: 26px; padding: 26px 22px 22px; display: grid; gap: 18px; overflow: hidden;
+  background: radial-gradient(90% 60% at 50% 0%, rgba(255,36,64,.12), transparent 70%), linear-gradient(180deg, #12060a, #0a0405); border: 1px solid var(--edge-soft); }
+.shead { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px; }
+.salon h2 { margin: 0; font-family: var(--display); font-style: italic; font-weight: 900; font-size: 30px; line-height: 1;
+  background: var(--chrome); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 12px rgba(255,36,64,.45)); }
+.shead p { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+.cupo { font-size: 12.5px; font-weight: 700; color: var(--muted); border: 1px solid var(--edge-soft); border-radius: 999px; padding: 6px 12px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cupo b { color: #fff; }
+.leyenda { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--muted); }
+.leyenda span { display: inline-flex; align-items: center; gap: 8px; }
+.grid { display: grid; grid-template-columns: repeat(15, minmax(0, 1fr)); gap: 6px; }
+.mesa { aspect-ratio: 1; min-width: 0; padding: 0; border-radius: 10px; display: grid; place-items: center; font-size: 12.5px; font-weight: 750; font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, var(--cc) 75%, #fff); background: linear-gradient(180deg, color-mix(in srgb, var(--cc) 20%, #140609), color-mix(in srgb, var(--cc) 9%, #0a0304));
+  border: 1px solid color-mix(in srgb, var(--cc) 38%, transparent); transition: transform .12s, opacity .2s, box-shadow .2s; }
+.mesa:hover { transform: translateY(-1px); border-color: color-mix(in srgb, var(--cc) 80%, transparent); }
+.mesa.libre { --cc: #6a5559; color: #6f5c60; background: transparent; border-style: dashed; }
+.grid.foco .mesa:not(.hit) { opacity: .3; }
+.mesa.hit { color: #fff; background: linear-gradient(180deg, #ff4058, #c8001d); border-color: #ffb0ba; box-shadow: 0 0 0 2px rgba(255,36,64,.4), 0 0 22px rgba(255,36,64,.9); transform: scale(1.08); z-index: 1; animation: latido 1.6s ease-in-out infinite; }
+@keyframes latido { 50% { box-shadow: 0 0 0 4px rgba(255,36,64,.25), 0 0 32px rgba(255,36,64,1); } }
+.detalle { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px 12px 18px; border-radius: 14px; background: rgba(255,36,64,.1); border: 1px solid rgba(255,70,92,.45); }
+.detalle b { font-family: var(--display); font-style: italic; font-weight: 900; font-size: 19px; }
+.detalle p { margin: 2px 0 0; color: #e6cfd4; font-size: 13.5px; }
+.detalle button { flex: none; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.08); }
+footer { text-align: center; color: var(--dim); font-size: 13px; padding-bottom: 8px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (max-width: 620px) {
+  .hero { padding-block: 40px 28px; }
+  .eyebrow { font-size: 11px; letter-spacing: .18em; }
+  .field { padding-left: 14px; }
+  .field input { font-size: 17px; padding: 14px 0; }
+  .go { height: 46px; padding: 0 16px; font-size: 17px; }
+  .go span { display: none; }
+  .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pill.todos { grid-column: 1 / -1; min-height: 44px; }
+  .pill.todos small { display: none; }
+  .card { grid-template-columns: minmax(0, 1fr); gap: 14px; padding: 16px 16px 16px 20px; }
+  .tablero { justify-self: stretch; grid-template-columns: auto 1fr; align-items: center; justify-items: start; gap: 14px; padding: 10px 16px; }
+  .tablero .num { font-size: 36px; justify-self: end; }
+  .solo .tablero .num { font-size: 46px; }
+  .solo .who strong { font-size: 26px; }
+  .grid { grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 5px; }
+  .mesa { font-size: 11px; border-radius: 8px; }
+  .salon { padding: 20px 14px 16px; border-radius: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero::after, .mesa.hit { animation: none; }
+  .card, .mesa, .field { transition: none; }
+}
+</style>
+</head>
+<body>
+
+
+<header class="hero">
+  <img class="poster" src="fondo.jpg" alt="">
+  <video id="fondo" src="fondo.mp4" poster="fondo.jpg" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+  <div class="inner">
+    <img class="logo" src="logo-indu26.webp" alt="Indu 26" width="1400" height="316">
+    <div class="eyebrow">Cena de egresados · Promo 2026</div>
+    <h1>Encontrá tu mesa</h1>
+    <p class="lead">Escribí el <b>apellido o el nombre del egresado</b> que te invitó y te mostramos las mesas de su familia.</p>
+    <form class="search" id="form" role="search">
+      <label class="sr" for="q">Apellido o nombre del egresado</label>
+      <div class="field">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+        <input id="q" type="search" inputmode="search" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="Apellido o nombre del egresado">
+        <button class="clear" type="button" id="clear" aria-label="Borrar búsqueda" hidden>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+        <button class="go" type="submit" aria-label="Buscar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg><span>Buscar</span></button>
+      </div>
+      <div class="filters" id="cursos" role="group" aria-label="Filtrar por curso"></div>
+    </form>
+  </div>
+</header>
+
+<main class="inner">
+  <section class="results" id="results" aria-live="polite"></section>
+
+  <section class="salon" aria-labelledby="salon-t">
+    <div class="shead">
+      <div>
+        <h2 id="salon-t">Plano de mesas</h2>
+        <p>Tocá una mesa para ver de qué familia es.</p>
+      </div>
+      <span class="cupo" id="cupo"></span>
+    </div>
+    <div class="leyenda" id="leyenda"></div>
+    <div class="detalle" id="detalle" hidden></div>
+    <div class="grid" id="grid" aria-label="Mesas del 1 al 180"></div>
+  </section>
+
+  <footer>¿No encontrás al egresado? Consultá con la organización de la promo en la entrada.</footer>
+</main>
+
+<script>
+const TOTAL = 180;
+const CURSOS = {
+  "7mo 1ra": { k: 1, area: "Mecánica" },
+  "7mo 2da": { k: 2, area: "Química" },
+  "7mo 3ra": { k: 3, area: "Mecánica" },
+  "7mo 4ta": { k: 4, area: "Programación" },
+};
+// [apellido, nombre, curso, mesa desde, mesa hasta]
+const FAMILIAS = [["Cardoso","Alfonsa","7mo 1ra",1,2],["Carrizo","Tatiana","7mo 1ra",3,3],["Coppa","Milena","7mo 1ra",4,5],["Fernández","Adriano","7mo 1ra",6,6],["Gancio","Pablo","7mo 1ra",7,7],["Bruce Guerreiro y Luis Jara","","7mo 1ra",8,10],["Karg","Jesús","7mo 1ra",11,12],["Márcora","Esteban","7mo 1ra",13,14],["Medina","Morena","7mo 1ra",15,16],["Mena","Valentina","7mo 1ra",17,18],["Rodríguez","Alan","7mo 1ra",19,20],["Ross","Homero","7mo 1ra",21,21],["Solís","Evelyn","7mo 1ra",22,24],["Toledo","Juan Cruz","7mo 1ra",25,25],["Vergara","Valentino","7mo 1ra",26,27],["Zich","Valentín","7mo 1ra",28,29],["Tobler","Lara","7mo 2da",30,31],["Ledesma","Nahir","7mo 2da",32,33],["Araipy","Ervin","7mo 2da",34,35],["Cáceres","Agostina","7mo 2da",36,36],["Robledo","Lourdes","7mo 2da",37,38],["Guilanea","Gonzalo","7mo 2da",39,39],["Dutra","Celeste","7mo 2da",40,40],["Sartori","Nahiara","7mo 2da",41,43],["Rodríguez","Camila","7mo 2da",44,45],["Termini","Maitena","7mo 2da",46,47],["Delfine","Nahuel","7mo 2da",48,49],["Bernaldo de Quirós","Martina","7mo 2da",50,50],["Barreto","Alejandra","7mo 2da",51,51],["García","Isis","7mo 2da",52,53],["Delgado","Agustina","7mo 2da",54,55],["Cáceres","Aron","7mo 2da",56,56],["Burgos","Zaca","7mo 2da",57,58],["Lambert","Matias","7mo 2da",59,60],["Baratinni","Joaco","7mo 2da",61,62],["Acciardi","Camila","7mo 2da",63,64],["Arevalo","Areli","7mo 2da",65,66],["Cáceres","Joaco","7mo 2da",67,68],["Bucher","Lorenzo","7mo 2da",69,70],["Barreto","Benjamín","7mo 3ra",71,73],["Colombo","Leandro","7mo 3ra",74,74],["Ferreyra","Felipe","7mo 3ra",75,76],["Macelli","Catriel","7mo 3ra",77,78],["Gentile","Denise","7mo 3ra",79,80],["Gómez","Axel","7mo 3ra",81,82],["Gómez","Tiago","7mo 3ra",83,84],["González","Lola","7mo 3ra",85,85],["Gutiérrez","María Luz","7mo 3ra",86,87],["Manzi","Ian","7mo 3ra",88,89],["Misenti","Lautaro","7mo 3ra",90,91],["Obispo","Julieta","7mo 3ra",92,93],["Rodríguez","Leonela","7mo 3ra",94,95],["Semorile","Isabella","7mo 3ra",96,97],["Wilhjelm","Amy","7mo 3ra",98,101],["Algañaras","Berenice","7mo 4ta",102,102],["Amondaray","Lautaro","7mo 4ta",103,105],["Avogadro","Elena","7mo 4ta",106,107],["Berayra","Bianca","7mo 4ta",108,109],["Dominguez","Valentina","7mo 4ta",110,112],["Ferreyra","Juan","7mo 4ta",113,113],["Figueredo","Stefania","7mo 4ta",114,115],["Figueredo","Santino","7mo 4ta",116,116],["Gonzales","Martina","7mo 4ta",117,118],["Grispo","Santiago","7mo 4ta",119,120],["Krausse","Keila","7mo 4ta",121,121],["Lopez","Kevin","7mo 4ta",122,125],["Lucero","Valentín","7mo 4ta",126,128],["Orqueida","Facundo","7mo 4ta",129,130],["Paoloni","Azul","7mo 4ta",131,133],["Pardini","Mauro","7mo 4ta",134,134],["Paz","Milton","7mo 4ta",135,136],["Pignat","Ignacio","7mo 4ta",137,137],["Surur","Kevin","7mo 4ta",138,139],["Van Loo","Roman","7mo 4ta",140,141]].map(([apellido, nombre, curso, desde, hasta], i) => ({ id: i, apellido, nombre, curso, desde, hasta }));
+
+const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
+const esc = s => s.replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+const nombre = f => f.nombre ? `${f.nombre} ${f.apellido}` : f.apellido;
+const mesasDe = f => Array.from({ length: f.hasta - f.desde + 1 }, (_, i) => f.desde + i);
+const listar = ns => ns.length === 1 ? `${ns[0]}` : ns.slice(0, -1).join(", ") + " y " + ns.at(-1);
+const textoMesas = f => { const ns = mesasDe(f); return (ns.length === 1 ? "Mesa " : "Mesas ") + listar(ns); };
+FAMILIAS.forEach(f => { f.key = norm(`${f.apellido} ${f.nombre}`); f.words = f.key.split(" "); });
+const plano = Array.from({ length: TOTAL }, (_, i) => FAMILIAS.find(f => f.desde <= i + 1 && f.hasta >= i + 1));
+
+const $ = id => document.getElementById(id);
+const q = $("q"), results = $("results"), grid = $("grid"), detalle = $("detalle");
+let curso = "Todos", elegida = null, marcados = new Set();
+
+const box = $("cursos");
+["Todos", ...Object.keys(CURSOS)].forEach(c => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "pill" + (c === "Todos" ? " todos" : " k" + CURSOS[c].k);
+  b.setAttribute("aria-pressed", c === curso);
+  b.innerHTML = c === "Todos" ? `<b>Todos</b><small>los cursos</small>` : `<b><i class="dot"></i>${c}</b><small>${CURSOS[c].area}</small>`;
+  b.addEventListener("click", () => { curso = c; box.querySelectorAll(".pill").forEach(x => x.setAttribute("aria-pressed", x === b)); elegida = null; render(); });
+  box.appendChild(b);
+});
+$("leyenda").innerHTML = Object.entries(CURSOS).map(([c, v]) => `<span class="k${v.k}"><i class="dot"></i>${c} · ${v.area}</span>`).join("");
+$("cupo").innerHTML = `<b>${plano.filter(Boolean).length}</b> de ${TOTAL} mesas asignadas`;
+
+plano.forEach((f, i) => {
+  const n = i + 1, b = document.createElement("button");
+  b.type = "button"; b.className = "mesa " + (f ? "k" + CURSOS[f.curso].k : "libre"); b.textContent = n; b.dataset.n = n;
+  b.setAttribute("aria-label", `Mesa ${n}: ${f ? nombre(f) + ", " + f.curso : "libre"}`);
+  b.addEventListener("click", () => { elegida = elegida === n ? null : n; pintar(); detalleMesa(); });
+  grid.appendChild(b);
+});
+
+function buscar() {
+  const ps = norm(q.value).split(" ").filter(Boolean);
+  return FAMILIAS.filter(f => (curso === "Todos" || f.curso === curso) && ps.every(p => f.words.some(w => w.startsWith(p)) || (p.length > 2 && f.key.includes(p))));
+}
+
+function numeros(f) {
+  const ns = mesasDe(f);
+  return ns.length <= 2 ? ns.join("<i>·</i>") : `${ns[0]}<i>–</i>${ns.at(-1)}`;
+}
+function tarjeta(f) {
+  const c = CURSOS[f.curso], ns = mesasDe(f);
+  return `<button type="button" class="card k${c.k}" data-id="${f.id}">
+    <span class="who"><strong>${esc(nombre(f))}</strong><small><i class="dot"></i>${f.curso} · ${c.area}</small></span>
+    <span class="tablero"><span class="lbl">${ns.length === 1 ? "Mesa" : ns.length + " mesas"}</span><span class="num">${numeros(f)}</span></span>
+    <span class="ver" aria-hidden="true">Ver en el plano <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span>
+    <span class="sr">${textoMesas(f)}</span>
+  </button>`;
+}
+
+function render() {
+  const t = q.value.trim(), hay = t.length > 0;
+  $("clear").hidden = !hay;
+  const lista = hay || curso !== "Todos" ? buscar() : [];
+  results.classList.toggle("solo", lista.length === 1);
+  if (!hay && curso === "Todos") {
+    results.innerHTML = `<p class="tip"><span>Probá con:</span><button type="button" data-ej="Tobler">Tobler</button><button type="button" data-ej="Figueredo">Figueredo</button><button type="button" data-ej="Medina">Medina</button></p>`;
+  } else if (!lista.length) {
+    results.innerHTML = `<div class="vacio"><strong>No encontramos «${esc(t)}»</strong><p>Revisá cómo está escrito o probá con una parte del apellido.${curso !== "Todos" ? " También podés buscar en todos los cursos." : ""}</p></div>`;
+  } else {
+    results.innerHTML = `<div class="rhead"><span><strong>${lista.length}</strong> ${lista.length === 1 ? "familia" : "familias"}</span>${lista.length > 1 ? "<span>Tocá una para verla en el plano</span>" : ""}</div>` + lista.map(tarjeta).join("");
+  }
+  marcados = new Set(lista.length <= 30 ? lista.flatMap(mesasDe) : []);
+  pintar(); detalleMesa();
+  try { localStorage.setItem("mesas-q", q.value); } catch (e) {}
+}
+
+function pintar() {
+  const sel = elegida ? plano[elegida - 1] : null;
+  const hits = sel ? new Set(mesasDe(sel)) : elegida ? new Set([elegida]) : marcados;
+  grid.classList.toggle("foco", hits.size > 0);
+  grid.querySelectorAll(".mesa").forEach(b => b.classList.toggle("hit", hits.has(+b.dataset.n)));
+  results.querySelectorAll(".card").forEach(c => c.classList.toggle("on", !!sel && +c.dataset.id === sel.id));
+}
+
+function detalleMesa() {
+  if (!elegida) { detalle.hidden = true; return; }
+  const f = plano[elegida - 1];
+  detalle.hidden = false;
+  detalle.innerHTML = `<div><b>${f ? esc(nombre(f)) : "Mesa " + elegida}</b><p>${f ? `${textoMesas(f)} · ${f.curso} · ${CURSOS[f.curso].area}` : "Mesa libre"}</p></div><button type="button" aria-label="Cerrar" id="cerrar">✕</button>`;
+  $("cerrar").onclick = () => { elegida = null; pintar(); detalleMesa(); };
+}
+
+results.addEventListener("click", e => {
+  const ej = e.target.closest("[data-ej]");
+  if (ej) { q.value = ej.dataset.ej; render(); return; }
+  const card = e.target.closest(".card");
+  if (card) { elegida = FAMILIAS[+card.dataset.id].desde; pintar(); detalleMesa(); $("salon-t").scrollIntoView({ block: "start" }); }
+});
+q.addEventListener("input", () => { elegida = null; render(); });
+$("form").addEventListener("submit", e => { e.preventDefault(); q.blur(); render(); if (q.value.trim()) results.scrollIntoView({ block: "start" }); });
+$("clear").addEventListener("click", () => { q.value = ""; elegida = null; render(); q.focus(); });
+
+const v = $("fondo");
+if (matchMedia("(prefers-reduced-motion: reduce)").matches) { v.removeAttribute("autoplay"); v.pause(); }
+else { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+v.addEventListener("playing", () => { const im = document.querySelector(".hero .poster"); if (im) im.hidden = true; });
+
+try { const prev = localStorage.getItem("mesas-q"); if (prev) q.value = prev; } catch (e) {}
+render();
+</script>
+
+</body>
+</html>
