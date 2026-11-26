@@ -237,49 +237,23 @@ footer { text-align: center; color: var(--dim); font-size: 13px; padding-bottom:
     <img class="logo" src="logo-indu26.webp" alt="Indu 26" width="1400" height="316">
     <div class="eyebrow">Promo 2026 · Indu 26</div>
     <h1>Encontrá tu mesa</h1>
-    <p class="lead">Escribí el <b>apellido o el nombre del egresado</b> que te invitó y te mostramos las mesas de su familia.</p>
+    <p class="lead">Escribí el <b>apellido completo del egresado</b> que te invitó y te mostramos el número de mesa de su familia.</p>
     <form class="search" id="form" role="search">
       <label class="sr" for="q">Apellido o nombre del egresado</label>
       <div class="field">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
-        <input id="q" type="search" inputmode="search" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="Apellido o nombre del egresado">
+        <input id="q" type="search" inputmode="search" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="Apellido del egresado">
         <button class="clear" type="button" id="clear" aria-label="Borrar búsqueda" hidden>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
         </button>
         <button class="go" type="submit" aria-label="Buscar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg><span>Buscar</span></button>
       </div>
-      <div class="filters" id="cursos" role="group" aria-label="Filtrar por curso"></div>
     </form>
   </div>
 </header>
 
 <main class="inner">
   <section class="results" id="results" aria-live="polite"></section>
-
-  <section class="salon" aria-labelledby="salon-t">
-    <div class="shead">
-      <div>
-        <h2 id="salon-t">Plano de mesas</h2>
-        <p id="salonTxt">Cada familia tiene un número. Los puntitos muestran cuántas mesas llevan ese número.</p>
-      </div>
-      <span class="cupo" id="cupo"></span>
-    </div>
-    <div class="espera" id="espera" hidden><b>Los números de mesa todavía no se sortearon.</b><span>Apenas se haga el sorteo, acá vas a ver el número de cada familia. Volvé a entrar más tarde.</span></div>
-    <div class="leyenda" id="leyenda"></div>
-    <div class="detalle" id="detalle" hidden></div>
-    <div class="grid" id="grid" aria-label="Números de mesa"></div>
-  </section>
-
-  <section class="salon lista-sec" id="listaSec" aria-labelledby="lista-t" hidden>
-    <div class="shead">
-      <div>
-        <h2 id="lista-t">Lista completa</h2>
-        <p>Todas las familias ordenadas por número de mesa.</p>
-      </div>
-      <button class="pill imprimir" type="button" id="imprimir"><b>Imprimir lista</b></button>
-    </div>
-    <div class="tabla-wrap"><table class="tabla" id="tabla"><thead><tr><th>Mesa</th><th>Familia del egresado</th><th>Curso</th><th>Mesas</th></tr></thead><tbody></tbody></table></div>
-  </section>
 
   <footer>¿No encontrás al egresado? Consultá con la organización de la promo en la entrada.</footer>
 </main>
@@ -291,144 +265,79 @@ const CURSOS = {
   "7mo 3ra": { k: 3, area: "Mecánica" },
   "7mo 4ta": { k: 4, area: "Programación" },
 };
-// [apellido, nombre, curso, cantidad de mesas]. El número de mesa sale del sorteo (sorteo.json).
-const FAMILIAS = [["Cardoso","Alfonsa","7mo 1ra",2],["Carrizo","Tatiana","7mo 1ra",1],["Coppa","Milena","7mo 1ra",2],["Fernández","Adriano","7mo 1ra",1],["Gancio","Pablo","7mo 1ra",1],["Bruce Guerreiro y Luis Jara","","7mo 1ra",3],["Karg","Jesús","7mo 1ra",2],["Márcora","Esteban","7mo 1ra",2],["Medina","Morena","7mo 1ra",2],["Mena","Valentina","7mo 1ra",2],["Rodríguez","Alan","7mo 1ra",2],["Ross","Homero","7mo 1ra",1],["Solís","Evelyn","7mo 1ra",3],["Toledo","Juan Cruz","7mo 1ra",1],["Vergara","Valentino","7mo 1ra",2],["Zich","Valentín","7mo 1ra",2],["Tobler","Lara","7mo 2da",2],["Ledesma","Nahir","7mo 2da",2],["Araipy","Ervin","7mo 2da",2],["Cáceres","Agostina","7mo 2da",1],["Robledo","Lourdes","7mo 2da",2],["Guilanea","Gonzalo","7mo 2da",1],["Dutra","Celeste","7mo 2da",1],["Sartori","Nahiara","7mo 2da",3],["Rodríguez","Camila","7mo 2da",2],["Termini","Maitena","7mo 2da",2],["Delfine","Nahuel","7mo 2da",2],["Bernaldo de Quirós","Martina","7mo 2da",1],["Barreto","Alejandra","7mo 2da",1],["García","Isis","7mo 2da",2],["Delgado","Agustina","7mo 2da",2],["Cáceres","Aron","7mo 2da",1],["Burgos","Zaca","7mo 2da",2],["Lambert","Matias","7mo 2da",2],["Baratinni","Joaco","7mo 2da",2],["Acciardi","Camila","7mo 2da",2],["Arevalo","Areli","7mo 2da",2],["Cáceres","Joaco","7mo 2da",2],["Bucher","Lorenzo","7mo 2da",2],["Barreto","Benjamín","7mo 3ra",3],["Colombo","Leandro","7mo 3ra",1],["Ferreyra","Felipe","7mo 3ra",2],["Macelli","Catriel","7mo 3ra",2],["Gentile","Denise","7mo 3ra",2],["Gómez","Axel","7mo 3ra",2],["Gómez","Tiago","7mo 3ra",2],["González","Lola","7mo 3ra",1],["Gutiérrez","María Luz","7mo 3ra",2],["Manzi","Ian","7mo 3ra",2],["Misenti","Lautaro","7mo 3ra",2],["Obispo","Julieta","7mo 3ra",2],["Rodríguez","Leonela","7mo 3ra",2],["Semorile","Isabella","7mo 3ra",2],["Wilhjelm","Amy","7mo 3ra",4],["Algañaras","Berenice","7mo 4ta",1],["Amondaray","Lautaro","7mo 4ta",3],["Avogadro","Elena","7mo 4ta",2],["Berayra","Bianca","7mo 4ta",2],["Dominguez","Valentina","7mo 4ta",3],["Ferreyra","Juan","7mo 4ta",1],["Figueredo","Stefania","7mo 4ta",2],["Figueredo","Santino","7mo 4ta",1],["Gonzales","Martina","7mo 4ta",2],["Grispo","Santiago","7mo 4ta",2],["Krausse","Keila","7mo 4ta",1],["Lopez","Kevin","7mo 4ta",4],["Lucero","Valentín","7mo 4ta",3],["Orqueida","Facundo","7mo 4ta",2],["Paoloni","Azul","7mo 4ta",3],["Pardini","Mauro","7mo 4ta",1],["Paz","Milton","7mo 4ta",2],["Pignat","Ignacio","7mo 4ta",1],["Surur","Kevin","7mo 4ta",2],["Van Loo","Roman","7mo 4ta",2]].map(([apellido, nombre, curso, cant], i) => ({ id: i, apellido, nombre, curso, cant, numero: null }));
-
-const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
+// El resultado del sorteo está en sorteo.json, cifrado por apellido: solo se puede leer
+// la mesa de una familia escribiendo su apellido (o su nombre y apellido) completo.
+const norm = s => String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
 const esc = s => String(s).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
-const nombre = f => f.nombre ? `${f.nombre} ${f.apellido}` : f.apellido;
-const cantTxt = f => f.cant === 1 ? "1 mesa" : `${f.cant} mesas`;
-const textoMesas = f => f.numero ? `Mesa ${f.numero}` + (f.cant > 1 ? ` (${f.cant} mesas con el número ${f.numero})` : "") : `Número a sortear, ${cantTxt(f)}`;
-FAMILIAS.forEach(f => { f.key = norm(`${f.apellido} ${f.nombre}`); f.words = f.key.split(" "); });
-let sorteado = false, plano = [];
+const te = new TextEncoder();
+const hex = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, "0")).join("");
+const b64d = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function idDe(t) { return hex(await crypto.subtle.digest("SHA-256", te.encode("indu26-id|" + t))).slice(0, 32); }
+async function claveDe(t) { const raw = await crypto.subtle.digest("SHA-256", te.encode("indu26-clave|" + t)); return crypto.subtle.importKey("raw", raw, "AES-GCM", false, ["decrypt"]); }
 
 const $ = id => document.getElementById(id);
-const q = $("q"), results = $("results"), grid = $("grid"), detalle = $("detalle");
-let curso = "Todos", elegida = null, marcados = new Set();
+const q = $("q"), results = $("results");
+let datos = null, estado = "cargando";
 
-const box = $("cursos");
-["Todos", ...Object.keys(CURSOS)].forEach(c => {
-  const b = document.createElement("button");
-  b.type = "button"; b.className = "pill" + (c === "Todos" ? " todos" : " k" + CURSOS[c].k);
-  b.setAttribute("aria-pressed", c === curso);
-  b.innerHTML = c === "Todos" ? `<b>Todos</b><small>los cursos</small>` : `<b><i class="dot"></i>${c}</b><small>${CURSOS[c].area}</small>`;
-  b.addEventListener("click", () => { curso = c; box.querySelectorAll(".pill").forEach(x => x.setAttribute("aria-pressed", x === b)); elegida = null; render(); });
-  box.appendChild(b);
-});
-$("leyenda").innerHTML = Object.entries(CURSOS).map(([c, v]) => `<span class="k${v.k}"><i class="dot"></i>${c} · ${v.area}</span>`).join("");
-$("cupo").innerHTML = `<b>${FAMILIAS.length}</b> números · <b>${FAMILIAS.reduce((s, f) => s + f.cant, 0)}</b> mesas`;
-
-function armarPlano() {
-  plano = sorteado ? [...FAMILIAS].sort((a, b) => a.numero - b.numero) : [];
-  grid.textContent = "";
-  plano.forEach(f => {
-    const n = f.numero, b = document.createElement("button");
-    b.type = "button"; b.className = "mesa k" + CURSOS[f.curso].k; b.dataset.n = n;
-    b.innerHTML = `<span class="n">${n}</span><span class="pts" aria-hidden="true">${"<i></i>".repeat(f.cant)}</span>`;
-    b.setAttribute("aria-label", `Mesa ${n}: ${nombre(f)}, ${cantTxt(f)}, ${f.curso}`);
-    b.addEventListener("click", () => { elegida = elegida === n ? null : n; pintar(); detalleMesa(); });
-    grid.appendChild(b);
-  });
-  $("espera").hidden = sorteado; $("leyenda").hidden = !sorteado; grid.hidden = !sorteado;
-  $("salonTxt").hidden = !sorteado; $("cupo").hidden = !sorteado;
-  $("listaSec").hidden = !sorteado;
-  const tb = $("tabla").tBodies[0]; tb.textContent = "";
-  plano.forEach(f => {
-    const tr = document.createElement("tr"), c = CURSOS[f.curso];
-    tr.innerHTML = `<td class="n">${f.numero}</td><td></td><td class="c k${c.k}"><i class="dot"></i></td><td class="m"></td>`;
-    tr.children[1].textContent = nombre(f);
-    tr.children[2].append(`${f.curso} · ${c.area}`);
-    tr.children[3].textContent = cantTxt(f);
-    tb.appendChild(tr);
-  });
-}
-
-function buscar() {
-  const ps = norm(q.value).split(" ").filter(Boolean);
-  return FAMILIAS.filter(f => (curso === "Todos" || f.curso === curso) && ps.every(p => f.words.some(w => w.startsWith(p)) || (p.length > 2 && f.key.includes(p))));
-}
-
-function tarjeta(f) {
-  const c = CURSOS[f.curso];
-  const tab = f.numero
-    ? `<span class="tablero"><span class="lbl">Mesa</span><span class="num">${f.numero}</span><span class="cant">${f.cant === 1 ? "1 mesa" : f.cant + " mesas con este número"}</span></span>`
-    : `<span class="tablero"><span class="lbl">Mesa</span><span class="num q">A sortear</span><span class="pend">${cantTxt(f)} · el número sale en el sorteo</span></span>`;
-  return `<button type="button" class="card k${c.k}" data-id="${f.id}">
-    <span class="who"><strong>${esc(nombre(f))}</strong><small><i class="dot"></i>${f.curso} · ${c.area}</small></span>
-    ${tab}
-    ${f.numero ? `<span class="ver" aria-hidden="true">Ver en el plano <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span>` : ""}
-    <span class="sr">${esc(textoMesas(f))}</span>
-  </button>`;
-}
-
-function render() {
-  const t = q.value.trim(), hay = t.length > 0;
-  $("clear").hidden = !hay;
-  const lista = hay || curso !== "Todos" ? buscar() : [];
-  results.classList.toggle("solo", lista.length === 1);
-  if (!hay && curso === "Todos") {
-    results.innerHTML = `<p class="tip"><span>Probá con:</span><button type="button" data-ej="Tobler">Tobler</button><button type="button" data-ej="Figueredo">Figueredo</button><button type="button" data-ej="Medina">Medina</button></p>`;
-  } else if (!lista.length) {
-    results.innerHTML = `<div class="vacio"><strong>No encontramos «${esc(t)}»</strong><p>Revisá cómo está escrito o probá con una parte del apellido.${curso !== "Todos" ? " También podés buscar en todos los cursos." : ""}</p></div>`;
-  } else {
-    results.innerHTML = `<div class="rhead"><span><strong>${lista.length}</strong> ${lista.length === 1 ? "familia" : "familias"}</span>${lista.length > 1 && sorteado ? "<span>Tocá una para verla en el plano</span>" : ""}</div>` + lista.map(tarjeta).join("");
-  }
-  marcados = new Set(sorteado && lista.length <= 30 ? lista.map(f => f.numero) : []);
-  pintar(); detalleMesa();
-  try { localStorage.setItem("mesas-q", q.value); } catch (e) {}
-}
-
-function pintar() {
-  const sel = elegida ? plano.find(f => f.numero === elegida) : null;
-  const hits = sel ? new Set([sel.numero]) : marcados;
-  grid.classList.toggle("foco", hits.size > 0);
-  grid.querySelectorAll(".mesa").forEach(b => b.classList.toggle("hit", hits.has(+b.dataset.n)));
-  results.querySelectorAll(".card").forEach(c => c.classList.toggle("on", !!sel && +c.dataset.id === sel.id));
-}
-
-function detalleMesa() {
-  const f = elegida ? plano.find(x => x.numero === elegida) : null;
-  if (!f) { detalle.hidden = true; return; }
-  detalle.hidden = false;
-  detalle.innerHTML = `<div><b>${esc(nombre(f))}</b><p>${esc(textoMesas(f))} · ${f.curso} · ${CURSOS[f.curso].area}</p></div><button type="button" aria-label="Cerrar" id="cerrar">✕</button>`;
-  $("cerrar").onclick = () => { elegida = null; pintar(); detalleMesa(); };
-}
-
-results.addEventListener("click", e => {
-  const ej = e.target.closest("[data-ej]");
-  if (ej) { q.value = ej.dataset.ej; render(); return; }
-  const card = e.target.closest(".card");
-  if (card && sorteado) { elegida = FAMILIAS[+card.dataset.id].numero; pintar(); detalleMesa(); $("salon-t").scrollIntoView({ block: "start" }); }
-});
-q.addEventListener("input", () => { elegida = null; render(); });
-$("form").addEventListener("submit", e => { e.preventDefault(); q.blur(); render(); if (q.value.trim()) results.scrollIntoView({ block: "start" }); });
-$("clear").addEventListener("click", () => { q.value = ""; elegida = null; render(); q.focus(); });
-$("imprimir").addEventListener("click", () => { try { window.print(); } catch (e) {} });
-
-// Resultado del sorteo: sorteo.json, publicado al lado de esta página
-let firma = "";
 async function cargarSorteo() {
   let d = null;
   try { const r = await fetch("sorteo.json?t=" + Date.now(), { cache: "no-store" }); if (r.ok) d = await r.json(); } catch (e) {}
-  const lista = d && d.estado === "hecho" && Array.isArray(d.familias) ? d.familias : null;
-  const porNombre = new Map(FAMILIAS.map(f => [norm(nombre(f)), f]));
-  const nuevos = new Map();
-  if (lista) for (const x of lista) { const f = porNombre.get(norm(String(x.nombre || ""))); const n = Number(x.n); if (f && Number.isInteger(n) && n > 0) nuevos.set(f.id, n); }
-  const ok = lista && nuevos.size === FAMILIAS.length && new Set(nuevos.values()).size === FAMILIAS.length;
-  const f2 = ok ? [...nuevos].join(",") : "pendiente";
-  if (f2 === firma) return;
-  firma = f2; sorteado = !!ok;
-  FAMILIAS.forEach(f => { f.numero = ok ? nuevos.get(f.id) : null; });
-  elegida = null; armarPlano(); render();
+  const nuevo = d && d.estado === "hecho" && Array.isArray(d.entradas) ? "hecho" : d ? "pendiente" : "error";
+  const cambio = nuevo !== estado || (nuevo === "hecho" && d.actualizado !== datos?.actualizado);
+  estado = nuevo; datos = nuevo === "hecho" ? d : null;
+  if (cambio && q.value.trim()) buscar();
 }
-armarPlano();
+
+function tarjeta(x) {
+  const c = CURSOS[x.curso] || { k: 2, area: "" };
+  return `<div class="card k${c.k}">
+    <span class="who"><strong>${esc(x.nombre)}</strong><small><i class="dot"></i>${esc(x.curso)}${c.area ? " · " + c.area : ""}</small></span>
+    <span class="tablero"><span class="lbl">Mesa</span><span class="num">${Number(x.n)}</span><span class="cant">${x.cant === 1 ? "1 mesa" : Number(x.cant) + " mesas con este número"}</span></span>
+    <span class="sr">Mesa ${Number(x.n)}${x.cant > 1 ? `, ${Number(x.cant)} mesas con ese número` : ""}</span>
+  </div>`;
+}
+
+let busqueda = 0;
+async function buscar() {
+  const t = norm(q.value), yo = ++busqueda;
+  $("clear").hidden = !q.value;
+  if (!t) { results.innerHTML = `<p class="tip">Escribí el apellido completo y tocá <b>&nbsp;Buscar</b>.</p>`; return; }
+  if (estado === "cargando") { results.innerHTML = `<p class="tip">Cargando…</p>`; await cargarSorteo(); if (yo !== busqueda) return; }
+  if (estado === "error") { results.innerHTML = `<div class="vacio"><strong>No se pudo cargar</strong><p>Revisá la conexión y probá de nuevo en un momento.</p></div>`; return; }
+  if (estado === "pendiente") { results.innerHTML = `<div class="vacio"><strong>Todavía no se hizo el sorteo</strong><p>Los números de mesa se publican apenas se sortean. Volvé a entrar más tarde.</p></div>`; return; }
+  const palabras = t.split(" ").filter(w => w.length >= 2);
+  const terminos = [...new Set([t, ...palabras.filter(w => w.length >= 3)])];
+  const hallados = new Map();
+  for (const term of terminos) {
+    const id = await idDe(term); const filas = datos.entradas.filter(e => e.k === id);
+    if (!filas.length) continue;
+    const clave = await claveDe(term);
+    for (const e of filas) {
+      try { const txt = new TextDecoder().decode(await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64d(e.iv) }, clave, b64d(e.d)));
+        const x = JSON.parse(txt); if (palabras.every(w => norm(x.nombre).split(" ").includes(w))) hallados.set(x.nombre + "|" + x.n, x); } catch (err) {}
+    }
+  }
+  if (yo !== busqueda) return;
+  const lista = [...hallados.values()].sort((a, b) => a.n - b.n);
+  results.classList.toggle("solo", lista.length === 1);
+  if (!lista.length) {
+    results.innerHTML = `<div class="vacio"><strong>No encontramos «${esc(q.value.trim())}»</strong><p>Escribí el apellido completo, tal como está en la lista de la promo. Si es un apellido compuesto, probá con una sola de sus partes.</p></div>`;
+    return;
+  }
+  results.innerHTML = `<div class="rhead"><span><strong>${lista.length}</strong> ${lista.length === 1 ? "familia" : "familias con ese apellido"}</span></div>` + lista.map(tarjeta).join("");
+}
+
+$("form").addEventListener("submit", e => { e.preventDefault(); q.blur(); buscar(); });
+let tm = null;
+q.addEventListener("input", () => { $("clear").hidden = !q.value; clearTimeout(tm); if (!q.value.trim()) buscar(); else tm = setTimeout(() => { if (norm(q.value).length >= 3) buscar(); }, 450); });
+$("clear").addEventListener("click", () => { q.value = ""; buscar(); q.focus(); });
+
 const v = $("fondo");
 if (matchMedia("(prefers-reduced-motion: reduce)").matches) { v.removeAttribute("autoplay"); v.pause(); }
 else { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
 v.addEventListener("playing", () => { const im = document.querySelector(".hero .poster"); if (im) im.hidden = true; });
 
-try { const prev = localStorage.getItem("mesas-q"); if (prev) q.value = prev; } catch (e) {}
-render();
+buscar();
 cargarSorteo();
 setInterval(() => { if (document.visibilityState === "visible") cargarSorteo(); }, 60000);
 </script>
