@@ -120,7 +120,7 @@ main { display: grid; gap: 34px; padding-block: 8px 60px; }
 .tablero .lbl { font-size: 10.5px; font-weight: 800; font-stretch: 125%; letter-spacing: .3em; text-transform: uppercase; color: #ff8b9b; }
 .tablero .num { font-family: var(--display); font-style: italic; font-weight: 900; font-size: 40px; line-height: 1; letter-spacing: -.01em; white-space: nowrap; font-variant-numeric: tabular-nums;
   background: var(--chrome); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 1px 0 #ff2440) drop-shadow(0 0 10px rgba(255,36,64,.7)); }
-.tablero .num i { font-style: normal; font-size: .55em; padding: 0 .12em; }
+.tablero .num i { font-style: normal; font-size: .45em; padding: 0 .22em; vertical-align: .35em; }
 .solo .card { padding: 24px 24px 24px 28px; }
 .solo .who strong { font-size: 30px; }
 .solo .tablero { min-width: 170px; padding: 14px 22px 16px; }
@@ -237,7 +237,7 @@ footer { text-align: center; color: var(--dim); font-size: 13px; padding-bottom:
     <img class="logo" src="logo-indu26.webp" alt="Indu 26" width="1400" height="316">
     <div class="eyebrow">Promo 2026 · Indu 26</div>
     <h1>Encontrá tu mesa</h1>
-    <p class="lead">Escribí el <b>apellido completo del egresado</b> que te invitó y te mostramos el número de mesa de su familia.</p>
+    <p class="lead">Escribí el <b>apellido completo del egresado</b> que te invitó y te mostramos los números de mesa de su familia.</p>
     <form class="search" id="form" role="search">
       <label class="sr" for="q">Apellido o nombre del egresado</label>
       <div class="field">
@@ -290,10 +290,13 @@ async function cargarSorteo() {
 
 function tarjeta(x) {
   const c = CURSOS[x.curso] || { k: 2, area: "" };
+  const n = Number(x.n), cant = Number(x.cant) || 1, h = Number(x.h) || n + cant - 1;
+  const num = cant === 1 ? `${n}` : cant === 2 ? `${n}<i>y</i>${h}` : `${n}<i>a</i>${h}`;
+  const txt = cant === 1 ? `Mesa ${n}` : cant === 2 ? `Mesas ${n} y ${h}` : `Mesas ${n} a ${h}`;
   return `<div class="card k${c.k}">
     <span class="who"><strong>${esc(x.nombre)}</strong><small><i class="dot"></i>${esc(x.curso)}${c.area ? " · " + c.area : ""}</small></span>
-    <span class="tablero"><span class="lbl">Mesa</span><span class="num">${Number(x.n)}</span><span class="cant">${x.cant === 1 ? "1 mesa" : Number(x.cant) + " mesas con este número"}</span></span>
-    <span class="sr">Mesa ${Number(x.n)}${x.cant > 1 ? `, ${Number(x.cant)} mesas con ese número` : ""}</span>
+    <span class="tablero"><span class="lbl">${cant === 1 ? "Mesa" : "Mesas"}</span><span class="num">${num}</span><span class="cant">${cant === 1 ? "1 mesa" : cant + " mesas, una al lado de la otra"}</span></span>
+    <span class="sr">${txt}</span>
   </div>`;
 }
 
