@@ -165,6 +165,36 @@ main { display: grid; gap: 34px; padding-block: 8px 60px; }
 .detalle p { margin: 2px 0 0; color: #e6cfd4; font-size: 13.5px; }
 .detalle button { flex: none; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.08); }
 footer { text-align: center; color: var(--dim); font-size: 13px; padding-bottom: 8px; }
+.espera { display: grid; gap: 4px; padding: 16px 18px; border-radius: 16px; background: rgba(255,36,64,.08); border: 1px dashed rgba(255,70,92,.45); }
+.espera b { font-family: var(--display); font-style: italic; font-weight: 900; font-size: 19px; }
+.espera span { color: var(--muted); font-size: 14px; }
+.tablero .num.q { font-size: 34px; }
+.tablero .pend { font-size: 11.5px; font-weight: 700; color: #ffc2ca; text-align: center; }
+.imprimir { min-height: 44px; justify-items: center; }
+.tabla-wrap { overflow-x: auto; }
+.tabla { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+.tabla th { text-align: left; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,.18); }
+.tabla td { padding: 9px 10px; border-bottom: 1px solid rgba(255,255,255,.06); }
+.tabla td.n { font-family: var(--display); font-style: italic; font-weight: 900; font-size: 20px; color: #fff; text-shadow: 0 0 10px rgba(255,36,64,.7); width: 64px; font-variant-numeric: tabular-nums; }
+.tabla td.c { color: var(--muted); white-space: nowrap; }
+.tabla td.m { white-space: nowrap; }
+.tabla td .dot { display: inline-block; margin-right: 7px; vertical-align: middle; }
+@media print {
+  @page { size: A4; margin: 12mm; }
+  body { background: #fff !important; color: #111 !important; }
+  .hero, .results, .salon:not(.lista-sec), footer, .imprimir { display: none !important; }
+  main { padding: 0 !important; }
+  .lista-sec { background: none !important; border: 0 !important; padding: 0 !important; }
+  .lista-sec h2 { color: #111 !important; -webkit-text-fill-color: #111; background: none !important; filter: none !important; }
+  .lista-sec .shead p { color: #444 !important; }
+  .tabla { font-size: 11pt; }
+  .tabla th { color: #555 !important; border-bottom: 1.5px solid #111 !important; }
+  .tabla td { border-bottom: 1px solid #ddd !important; color: #111 !important; padding: 5px 8px; }
+  .tabla td.n { color: #c3001b !important; text-shadow: none !important; }
+  .tabla td.c { color: #555 !important; }
+  .tabla tr { break-inside: avoid; }
+  .tabla td .dot { print-color-adjust: exact; -webkit-print-color-adjust: exact; box-shadow: none; }
+}
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 @media (max-width: 620px) {
@@ -186,6 +216,8 @@ footer { text-align: center; color: var(--dim); font-size: 13px; padding-bottom:
   .mesa { font-size: 16px; border-radius: 10px; }
   .tablero { grid-template-columns: auto 1fr; }
   .tablero .cant { grid-column: 1 / -1; justify-self: end; text-align: right; }
+  .tablero .pend { grid-column: 1 / -1; justify-self: end; text-align: right; }
+  .tablero .num.q { font-size: 28px; }
   .salon { padding: 20px 14px 16px; border-radius: 22px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -228,13 +260,25 @@ footer { text-align: center; color: var(--dim); font-size: 13px; padding-bottom:
     <div class="shead">
       <div>
         <h2 id="salon-t">Plano de mesas</h2>
-        <p>Cada familia tiene un número. Los puntitos muestran cuántas mesas llevan ese número.</p>
+        <p id="salonTxt">Cada familia tiene un número. Los puntitos muestran cuántas mesas llevan ese número.</p>
       </div>
       <span class="cupo" id="cupo"></span>
     </div>
+    <div class="espera" id="espera" hidden><b>Los números de mesa todavía no se sortearon.</b><span>Apenas se haga el sorteo, acá vas a ver el número de cada familia. Volvé a entrar más tarde.</span></div>
     <div class="leyenda" id="leyenda"></div>
     <div class="detalle" id="detalle" hidden></div>
     <div class="grid" id="grid" aria-label="Números de mesa"></div>
+  </section>
+
+  <section class="salon lista-sec" id="listaSec" aria-labelledby="lista-t" hidden>
+    <div class="shead">
+      <div>
+        <h2 id="lista-t">Lista completa</h2>
+        <p>Todas las familias ordenadas por número de mesa.</p>
+      </div>
+      <button class="pill imprimir" type="button" id="imprimir"><b>Imprimir lista</b></button>
+    </div>
+    <div class="tabla-wrap"><table class="tabla" id="tabla"><thead><tr><th>Mesa</th><th>Familia del egresado</th><th>Curso</th><th>Mesas</th></tr></thead><tbody></tbody></table></div>
   </section>
 
   <footer>¿No encontrás al egresado? Consultá con la organización de la promo en la entrada.</footer>
@@ -247,18 +291,16 @@ const CURSOS = {
   "7mo 3ra": { k: 3, area: "Mecánica" },
   "7mo 4ta": { k: 4, area: "Programación" },
 };
-// [apellido, nombre, curso, número de mesa, cantidad de mesas con ese número]
-const FAMILIAS = [["Cardoso","Alfonsa","7mo 1ra",1,2],["Carrizo","Tatiana","7mo 1ra",2,1],["Coppa","Milena","7mo 1ra",3,2],["Fernández","Adriano","7mo 1ra",4,1],["Gancio","Pablo","7mo 1ra",5,1],["Bruce Guerreiro y Luis Jara","","7mo 1ra",6,3],["Karg","Jesús","7mo 1ra",7,2],["Márcora","Esteban","7mo 1ra",8,2],["Medina","Morena","7mo 1ra",9,2],["Mena","Valentina","7mo 1ra",10,2],["Rodríguez","Alan","7mo 1ra",11,2],["Ross","Homero","7mo 1ra",12,1],["Solís","Evelyn","7mo 1ra",13,3],["Toledo","Juan Cruz","7mo 1ra",14,1],["Vergara","Valentino","7mo 1ra",15,2],["Zich","Valentín","7mo 1ra",16,2],["Tobler","Lara","7mo 2da",17,2],["Ledesma","Nahir","7mo 2da",18,2],["Araipy","Ervin","7mo 2da",19,2],["Cáceres","Agostina","7mo 2da",20,1],["Robledo","Lourdes","7mo 2da",21,2],["Guilanea","Gonzalo","7mo 2da",22,1],["Dutra","Celeste","7mo 2da",23,1],["Sartori","Nahiara","7mo 2da",24,3],["Rodríguez","Camila","7mo 2da",25,2],["Termini","Maitena","7mo 2da",26,2],["Delfine","Nahuel","7mo 2da",27,2],["Bernaldo de Quirós","Martina","7mo 2da",28,1],["Barreto","Alejandra","7mo 2da",29,1],["García","Isis","7mo 2da",30,2],["Delgado","Agustina","7mo 2da",31,2],["Cáceres","Aron","7mo 2da",32,1],["Burgos","Zaca","7mo 2da",33,2],["Lambert","Matias","7mo 2da",34,2],["Baratinni","Joaco","7mo 2da",35,2],["Acciardi","Camila","7mo 2da",36,2],["Arevalo","Areli","7mo 2da",37,2],["Cáceres","Joaco","7mo 2da",38,2],["Bucher","Lorenzo","7mo 2da",39,2],["Barreto","Benjamín","7mo 3ra",40,3],["Colombo","Leandro","7mo 3ra",41,1],["Ferreyra","Felipe","7mo 3ra",42,2],["Macelli","Catriel","7mo 3ra",43,2],["Gentile","Denise","7mo 3ra",44,2],["Gómez","Axel","7mo 3ra",45,2],["Gómez","Tiago","7mo 3ra",46,2],["González","Lola","7mo 3ra",47,1],["Gutiérrez","María Luz","7mo 3ra",48,2],["Manzi","Ian","7mo 3ra",49,2],["Misenti","Lautaro","7mo 3ra",50,2],["Obispo","Julieta","7mo 3ra",51,2],["Rodríguez","Leonela","7mo 3ra",52,2],["Semorile","Isabella","7mo 3ra",53,2],["Wilhjelm","Amy","7mo 3ra",54,4],["Algañaras","Berenice","7mo 4ta",55,1],["Amondaray","Lautaro","7mo 4ta",56,3],["Avogadro","Elena","7mo 4ta",57,2],["Berayra","Bianca","7mo 4ta",58,2],["Dominguez","Valentina","7mo 4ta",59,3],["Ferreyra","Juan","7mo 4ta",60,1],["Figueredo","Stefania","7mo 4ta",61,2],["Figueredo","Santino","7mo 4ta",62,1],["Gonzales","Martina","7mo 4ta",63,2],["Grispo","Santiago","7mo 4ta",64,2],["Krausse","Keila","7mo 4ta",65,1],["Lopez","Kevin","7mo 4ta",66,4],["Lucero","Valentín","7mo 4ta",67,3],["Orqueida","Facundo","7mo 4ta",68,2],["Paoloni","Azul","7mo 4ta",69,3],["Pardini","Mauro","7mo 4ta",70,1],["Paz","Milton","7mo 4ta",71,2],["Pignat","Ignacio","7mo 4ta",72,1],["Surur","Kevin","7mo 4ta",73,2],["Van Loo","Roman","7mo 4ta",74,2]].map(([apellido, nombre, curso, numero, cant], i) => ({ id: i, apellido, nombre, curso, numero, cant }));
+// [apellido, nombre, curso, cantidad de mesas]. El número de mesa sale del sorteo (sorteo.json).
+const FAMILIAS = [["Cardoso","Alfonsa","7mo 1ra",2],["Carrizo","Tatiana","7mo 1ra",1],["Coppa","Milena","7mo 1ra",2],["Fernández","Adriano","7mo 1ra",1],["Gancio","Pablo","7mo 1ra",1],["Bruce Guerreiro y Luis Jara","","7mo 1ra",3],["Karg","Jesús","7mo 1ra",2],["Márcora","Esteban","7mo 1ra",2],["Medina","Morena","7mo 1ra",2],["Mena","Valentina","7mo 1ra",2],["Rodríguez","Alan","7mo 1ra",2],["Ross","Homero","7mo 1ra",1],["Solís","Evelyn","7mo 1ra",3],["Toledo","Juan Cruz","7mo 1ra",1],["Vergara","Valentino","7mo 1ra",2],["Zich","Valentín","7mo 1ra",2],["Tobler","Lara","7mo 2da",2],["Ledesma","Nahir","7mo 2da",2],["Araipy","Ervin","7mo 2da",2],["Cáceres","Agostina","7mo 2da",1],["Robledo","Lourdes","7mo 2da",2],["Guilanea","Gonzalo","7mo 2da",1],["Dutra","Celeste","7mo 2da",1],["Sartori","Nahiara","7mo 2da",3],["Rodríguez","Camila","7mo 2da",2],["Termini","Maitena","7mo 2da",2],["Delfine","Nahuel","7mo 2da",2],["Bernaldo de Quirós","Martina","7mo 2da",1],["Barreto","Alejandra","7mo 2da",1],["García","Isis","7mo 2da",2],["Delgado","Agustina","7mo 2da",2],["Cáceres","Aron","7mo 2da",1],["Burgos","Zaca","7mo 2da",2],["Lambert","Matias","7mo 2da",2],["Baratinni","Joaco","7mo 2da",2],["Acciardi","Camila","7mo 2da",2],["Arevalo","Areli","7mo 2da",2],["Cáceres","Joaco","7mo 2da",2],["Bucher","Lorenzo","7mo 2da",2],["Barreto","Benjamín","7mo 3ra",3],["Colombo","Leandro","7mo 3ra",1],["Ferreyra","Felipe","7mo 3ra",2],["Macelli","Catriel","7mo 3ra",2],["Gentile","Denise","7mo 3ra",2],["Gómez","Axel","7mo 3ra",2],["Gómez","Tiago","7mo 3ra",2],["González","Lola","7mo 3ra",1],["Gutiérrez","María Luz","7mo 3ra",2],["Manzi","Ian","7mo 3ra",2],["Misenti","Lautaro","7mo 3ra",2],["Obispo","Julieta","7mo 3ra",2],["Rodríguez","Leonela","7mo 3ra",2],["Semorile","Isabella","7mo 3ra",2],["Wilhjelm","Amy","7mo 3ra",4],["Algañaras","Berenice","7mo 4ta",1],["Amondaray","Lautaro","7mo 4ta",3],["Avogadro","Elena","7mo 4ta",2],["Berayra","Bianca","7mo 4ta",2],["Dominguez","Valentina","7mo 4ta",3],["Ferreyra","Juan","7mo 4ta",1],["Figueredo","Stefania","7mo 4ta",2],["Figueredo","Santino","7mo 4ta",1],["Gonzales","Martina","7mo 4ta",2],["Grispo","Santiago","7mo 4ta",2],["Krausse","Keila","7mo 4ta",1],["Lopez","Kevin","7mo 4ta",4],["Lucero","Valentín","7mo 4ta",3],["Orqueida","Facundo","7mo 4ta",2],["Paoloni","Azul","7mo 4ta",3],["Pardini","Mauro","7mo 4ta",1],["Paz","Milton","7mo 4ta",2],["Pignat","Ignacio","7mo 4ta",1],["Surur","Kevin","7mo 4ta",2],["Van Loo","Roman","7mo 4ta",2]].map(([apellido, nombre, curso, cant], i) => ({ id: i, apellido, nombre, curso, cant, numero: null }));
 
 const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
-const esc = s => s.replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+const esc = s => String(s).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
 const nombre = f => f.nombre ? `${f.nombre} ${f.apellido}` : f.apellido;
-const mesasDe = f => [f.numero];
 const cantTxt = f => f.cant === 1 ? "1 mesa" : `${f.cant} mesas`;
-const listar = ns => ns.length === 1 ? `${ns[0]}` : ns.slice(0, -1).join(", ") + " y " + ns.at(-1);
-const textoMesas = f => `Mesa ${f.numero}` + (f.cant > 1 ? ` (${f.cant} mesas con el número ${f.numero})` : "");
+const textoMesas = f => f.numero ? `Mesa ${f.numero}` + (f.cant > 1 ? ` (${f.cant} mesas con el número ${f.numero})` : "") : `Número a sortear, ${cantTxt(f)}`;
 FAMILIAS.forEach(f => { f.key = norm(`${f.apellido} ${f.nombre}`); f.words = f.key.split(" "); });
-const plano = [...FAMILIAS].sort((a, b) => a.numero - b.numero);
+let sorteado = false, plano = [];
 
 const $ = id => document.getElementById(id);
 const q = $("q"), results = $("results"), grid = $("grid"), detalle = $("detalle");
@@ -276,28 +318,46 @@ const box = $("cursos");
 $("leyenda").innerHTML = Object.entries(CURSOS).map(([c, v]) => `<span class="k${v.k}"><i class="dot"></i>${c} · ${v.area}</span>`).join("");
 $("cupo").innerHTML = `<b>${FAMILIAS.length}</b> números · <b>${FAMILIAS.reduce((s, f) => s + f.cant, 0)}</b> mesas`;
 
-plano.forEach(f => {
-  const n = f.numero, b = document.createElement("button");
-  b.type = "button"; b.className = "mesa k" + CURSOS[f.curso].k; b.dataset.n = n;
-  b.innerHTML = `<span class="n">${n}</span><span class="pts" aria-hidden="true">${"<i></i>".repeat(f.cant)}</span>`;
-  b.setAttribute("aria-label", `Mesa ${n}: ${nombre(f)}, ${cantTxt(f)}, ${f.curso}`);
-  b.addEventListener("click", () => { elegida = elegida === n ? null : n; pintar(); detalleMesa(); });
-  grid.appendChild(b);
-});
+function armarPlano() {
+  plano = sorteado ? [...FAMILIAS].sort((a, b) => a.numero - b.numero) : [];
+  grid.textContent = "";
+  plano.forEach(f => {
+    const n = f.numero, b = document.createElement("button");
+    b.type = "button"; b.className = "mesa k" + CURSOS[f.curso].k; b.dataset.n = n;
+    b.innerHTML = `<span class="n">${n}</span><span class="pts" aria-hidden="true">${"<i></i>".repeat(f.cant)}</span>`;
+    b.setAttribute("aria-label", `Mesa ${n}: ${nombre(f)}, ${cantTxt(f)}, ${f.curso}`);
+    b.addEventListener("click", () => { elegida = elegida === n ? null : n; pintar(); detalleMesa(); });
+    grid.appendChild(b);
+  });
+  $("espera").hidden = sorteado; $("leyenda").hidden = !sorteado; grid.hidden = !sorteado;
+  $("salonTxt").hidden = !sorteado; $("cupo").hidden = !sorteado;
+  $("listaSec").hidden = !sorteado;
+  const tb = $("tabla").tBodies[0]; tb.textContent = "";
+  plano.forEach(f => {
+    const tr = document.createElement("tr"), c = CURSOS[f.curso];
+    tr.innerHTML = `<td class="n">${f.numero}</td><td></td><td class="c k${c.k}"><i class="dot"></i></td><td class="m"></td>`;
+    tr.children[1].textContent = nombre(f);
+    tr.children[2].append(`${f.curso} · ${c.area}`);
+    tr.children[3].textContent = cantTxt(f);
+    tb.appendChild(tr);
+  });
+}
 
 function buscar() {
   const ps = norm(q.value).split(" ").filter(Boolean);
   return FAMILIAS.filter(f => (curso === "Todos" || f.curso === curso) && ps.every(p => f.words.some(w => w.startsWith(p)) || (p.length > 2 && f.key.includes(p))));
 }
 
-function numeros(f) { return `${f.numero}`; }
 function tarjeta(f) {
-  const c = CURSOS[f.curso], ns = mesasDe(f);
+  const c = CURSOS[f.curso];
+  const tab = f.numero
+    ? `<span class="tablero"><span class="lbl">Mesa</span><span class="num">${f.numero}</span><span class="cant">${f.cant === 1 ? "1 mesa" : f.cant + " mesas con este número"}</span></span>`
+    : `<span class="tablero"><span class="lbl">Mesa</span><span class="num q">A sortear</span><span class="pend">${cantTxt(f)} · el número sale en el sorteo</span></span>`;
   return `<button type="button" class="card k${c.k}" data-id="${f.id}">
     <span class="who"><strong>${esc(nombre(f))}</strong><small><i class="dot"></i>${f.curso} · ${c.area}</small></span>
-    <span class="tablero"><span class="lbl">Mesa</span><span class="num">${numeros(f)}</span><span class="cant">${f.cant === 1 ? "1 mesa" : f.cant + " mesas con este número"}</span></span>
-    <span class="ver" aria-hidden="true">Ver en el plano <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span>
-    <span class="sr">${textoMesas(f)}</span>
+    ${tab}
+    ${f.numero ? `<span class="ver" aria-hidden="true">Ver en el plano <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span>` : ""}
+    <span class="sr">${esc(textoMesas(f))}</span>
   </button>`;
 }
 
@@ -311,26 +371,26 @@ function render() {
   } else if (!lista.length) {
     results.innerHTML = `<div class="vacio"><strong>No encontramos «${esc(t)}»</strong><p>Revisá cómo está escrito o probá con una parte del apellido.${curso !== "Todos" ? " También podés buscar en todos los cursos." : ""}</p></div>`;
   } else {
-    results.innerHTML = `<div class="rhead"><span><strong>${lista.length}</strong> ${lista.length === 1 ? "familia" : "familias"}</span>${lista.length > 1 ? "<span>Tocá una para verla en el plano</span>" : ""}</div>` + lista.map(tarjeta).join("");
+    results.innerHTML = `<div class="rhead"><span><strong>${lista.length}</strong> ${lista.length === 1 ? "familia" : "familias"}</span>${lista.length > 1 && sorteado ? "<span>Tocá una para verla en el plano</span>" : ""}</div>` + lista.map(tarjeta).join("");
   }
-  marcados = new Set(lista.length <= 30 ? lista.flatMap(mesasDe) : []);
+  marcados = new Set(sorteado && lista.length <= 30 ? lista.map(f => f.numero) : []);
   pintar(); detalleMesa();
   try { localStorage.setItem("mesas-q", q.value); } catch (e) {}
 }
 
 function pintar() {
   const sel = elegida ? plano.find(f => f.numero === elegida) : null;
-  const hits = sel ? new Set(mesasDe(sel)) : elegida ? new Set([elegida]) : marcados;
+  const hits = sel ? new Set([sel.numero]) : marcados;
   grid.classList.toggle("foco", hits.size > 0);
   grid.querySelectorAll(".mesa").forEach(b => b.classList.toggle("hit", hits.has(+b.dataset.n)));
   results.querySelectorAll(".card").forEach(c => c.classList.toggle("on", !!sel && +c.dataset.id === sel.id));
 }
 
 function detalleMesa() {
-  if (!elegida) { detalle.hidden = true; return; }
-  const f = plano.find(x => x.numero === elegida);
+  const f = elegida ? plano.find(x => x.numero === elegida) : null;
+  if (!f) { detalle.hidden = true; return; }
   detalle.hidden = false;
-  detalle.innerHTML = `<div><b>${f ? esc(nombre(f)) : "Mesa " + elegida}</b><p>${f ? `${textoMesas(f)} · ${f.curso} · ${CURSOS[f.curso].area}` : "Mesa libre"}</p></div><button type="button" aria-label="Cerrar" id="cerrar">✕</button>`;
+  detalle.innerHTML = `<div><b>${esc(nombre(f))}</b><p>${esc(textoMesas(f))} · ${f.curso} · ${CURSOS[f.curso].area}</p></div><button type="button" aria-label="Cerrar" id="cerrar">✕</button>`;
   $("cerrar").onclick = () => { elegida = null; pintar(); detalleMesa(); };
 }
 
@@ -338,12 +398,30 @@ results.addEventListener("click", e => {
   const ej = e.target.closest("[data-ej]");
   if (ej) { q.value = ej.dataset.ej; render(); return; }
   const card = e.target.closest(".card");
-  if (card) { elegida = FAMILIAS[+card.dataset.id].numero; pintar(); detalleMesa(); $("salon-t").scrollIntoView({ block: "start" }); }
+  if (card && sorteado) { elegida = FAMILIAS[+card.dataset.id].numero; pintar(); detalleMesa(); $("salon-t").scrollIntoView({ block: "start" }); }
 });
 q.addEventListener("input", () => { elegida = null; render(); });
 $("form").addEventListener("submit", e => { e.preventDefault(); q.blur(); render(); if (q.value.trim()) results.scrollIntoView({ block: "start" }); });
 $("clear").addEventListener("click", () => { q.value = ""; elegida = null; render(); q.focus(); });
+$("imprimir").addEventListener("click", () => { try { window.print(); } catch (e) {} });
 
+// Resultado del sorteo: sorteo.json, publicado al lado de esta página
+let firma = "";
+async function cargarSorteo() {
+  let d = null;
+  try { const r = await fetch("sorteo.json?t=" + Date.now(), { cache: "no-store" }); if (r.ok) d = await r.json(); } catch (e) {}
+  const lista = d && d.estado === "hecho" && Array.isArray(d.familias) ? d.familias : null;
+  const porNombre = new Map(FAMILIAS.map(f => [norm(nombre(f)), f]));
+  const nuevos = new Map();
+  if (lista) for (const x of lista) { const f = porNombre.get(norm(String(x.nombre || ""))); const n = Number(x.n); if (f && Number.isInteger(n) && n > 0) nuevos.set(f.id, n); }
+  const ok = lista && nuevos.size === FAMILIAS.length && new Set(nuevos.values()).size === FAMILIAS.length;
+  const f2 = ok ? [...nuevos].join(",") : "pendiente";
+  if (f2 === firma) return;
+  firma = f2; sorteado = !!ok;
+  FAMILIAS.forEach(f => { f.numero = ok ? nuevos.get(f.id) : null; });
+  elegida = null; armarPlano(); render();
+}
+armarPlano();
 const v = $("fondo");
 if (matchMedia("(prefers-reduced-motion: reduce)").matches) { v.removeAttribute("autoplay"); v.pause(); }
 else { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
@@ -351,6 +429,8 @@ v.addEventListener("playing", () => { const im = document.querySelector(".hero .
 
 try { const prev = localStorage.getItem("mesas-q"); if (prev) q.value = prev; } catch (e) {}
 render();
+cargarSorteo();
+setInterval(() => { if (document.visibilityState === "visible") cargarSorteo(); }, 60000);
 </script>
 
 </body>
